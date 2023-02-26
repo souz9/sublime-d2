@@ -1,0 +1,108 @@
+%YAML 1.2
+---
+name: D2
+file_extensions: [d2]
+scope: source.d2
+version: 2
+
+contexts:
+  prototype:
+    - include: comments
+
+  comments:
+    - match: \#
+      scope: punctuation.definition.comment.d2
+      push:
+        - meta_scope: comment.line.number-sign.d2
+        - match: \n
+          pop: 1
+
+  main:
+    - include: try-sentence
+
+  try-sentence:
+    - match: (?=\S)
+      push: relations
+  end-sentence:
+    - match: (?=})
+      pop: 1
+    - match: '{{sentence_end}}'
+      scope: punctuation.terminator.d2
+      pop: 1
+
+  relations:
+    - meta_scope: meta.mapping.key.d2
+    - match: \.
+      scope: punctuation.separator.sequence.d2
+    - include: operator
+    - match: (:)
+      scope: punctuation.separator.key-value.d2
+      set: property
+    - include: try-block
+    - include: end-sentence
+    - include: entity
+
+  entity:
+    - include: try-entity-builtin
+    - include: try-entity-name
+    - include: try-entity-text
+  try-entity-builtin:
+    - match: ({{builtin}})\s*(:)
+      captures:
+        1: variable.language.d2
+        2: punctuation.separator.key-value.d2
+      set: builtin-property
+    - match: ({{builtin}})\s*(?={{entity_end}})
+      captures:
+        1: variable.language.d2
+  try-entity-name:
+    - match: (\w+)\s*(?={{entity_end}})
+      captures:
+        1: entity.name.d2
+  try-entity-text:
+    - match: (?=\S)
+      push: entity-text
+  entity-text:
+    - meta_scope: entity.text.d2
+    - match: (?={{entity_end}})
+      pop: 1
+
+  property:
+    - meta_scope: meta.mapping.value.d2
+    - match: (\|+)
+      scope: punctuation.section.block.begin.d2
+      embed: property-code
+      # embed: scope:text.html.markdown
+      escape: \1
+      escape_captures:
+        0: punctuation.section.block.end.d2
+    - include: try-block
+    - include: end-sentence
+  property-code: []
+
+  builtin-property:
+    - meta_scope: constant.language.d2
+    - include: property
+
+  try-block:
+    - match: \{
+      scope: punctuation.section.block.begin.d2
+      set: block
+  block:
+    - meta_scope: meta.block
+    - include: end-block
+    - include: try-sentence
+  end-block:
+    - match: \}
+      scope: punctuation.section.block.end.d2
+      pop: 1
+
+  operator:
+    - match: '{{operator}}'
+      scope: keyword.operator.d2
+
+variables:
+  operator: '<-+>?|--*[\->]'
+  entity_end: '\.|:|{|}|{{operator}}|{{sentence_end}}'
+  sentence_end: ';|\n'
+  builtin: '3d|animated|border\-radius|class|constraint|direction|dst|fill|filled|font\-color|font\-size|height|icon|imports|label|layer|link|multiple|near|on_click|opacity|scenarios|shadow|shape|source\-arrowhead|src|stroke|stroke\-dash|stroke\-width|style|target\-arrowhead|tooltip|tooltip|vars|width'
