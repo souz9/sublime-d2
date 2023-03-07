@@ -40,9 +40,9 @@ contexts:
       set: property
     - include: try-block
     - include: end-sentence
-    - include: entity
+    - include: try-entity
 
-  entity:
+  try-entity:
     - include: try-entity-builtin
     - include: try-entity-name
     - include: try-entity-text
@@ -69,6 +69,8 @@ contexts:
 
   property:
     - meta_scope: meta.mapping.value.d2
+    - match: \\n
+      scope: constant.character.escape.d2
     - match: (\|+)
       scope: punctuation.section.block.begin.d2
       embed: property-code
