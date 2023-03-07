@@ -1,10 +1,9 @@
 {
 	"selector": "source.d2",
 
-	"shell_cmd": "d2 $file /tmp/d2.svg && xdg-open /tmp/d2.svg",
+	"cmd": ["d2", "--watch", "$file", "/tmp/d2.svg"],
 
 	"variants": [
-		{ "name": "watch", "cmd": ["d2", "--watch", "$file", "/tmp/d2.svg"], "shell_cmd":null },
 		{ "name": "layout=ELK", "env": {"D2_LAYOUT": "elk"} },
 	]
 }
