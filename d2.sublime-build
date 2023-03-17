@@ -1,7 +1,7 @@
 {
 	"selector": "source.d2",
 
-	"cmd": ["d2", "--watch", "$file", "/tmp/d2.svg"],
+	"cmd": ["d2", "--pad=10", "--watch", "$file", "/tmp/d2.svg"],
 
 	"variants": [
 		{ "name": "layout=ELK", "env": {"D2_LAYOUT": "elk"} },
