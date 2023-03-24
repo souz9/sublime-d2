@@ -83,7 +83,7 @@ contexts:
   property-code: []
 
   builtin-property:
-    - meta_scope: constant.language.d2
+    - meta_content_scope: meta.mapping.value.d2 string.unquoted.d2
     - include: property
 
   try-block:
@@ -107,4 +107,4 @@ variables:
   operator: '<-+>?|--*[\->]'
   entity_end: '\.|:|{|}|{{operator}}|{{sentence_end}}'
   sentence_end: ';|\n'
-  builtin: '3d|animated|border\-radius|class|constraint|direction|dst|fill|filled|font\-color|font\-size|height|icon|imports|label|layer|link|multiple|near|on_click|opacity|scenarios|shadow|shape|source\-arrowhead|src|stroke|stroke\-dash|stroke\-width|style|target\-arrowhead|tooltip|tooltip|vars|width'
+  builtin: '3d|animated|bold|border\-radius|class|constraint|direction|double\-border|dst|fill|filled|fill\-pattern|font|font\-color|font\-size|height|icon|imports|italic|label|layer|link|multiple|near|on_click|opacity|scenarios|shadow|shape|source\-arrowhead|src|stroke|stroke\-dash|stroke\-width|style|target\-arrowhead|tooltip|tooltip|underline|vars|width'
